@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    
+    <properties>
+        <property name="dialect" value="mysql" />
+    </properties>
+    
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>  
+    
+    
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC" />
@@ -15,6 +25,9 @@
     </environments>
 
     <mappers>
+        <mapper resource="mapper.NoteFileDao.xml" />
+        <mapper resource="mapper.JourneyNoteDao.xml" />
         <package name="com.shakool.mapper"/>
     </mappers>
+
 </configuration>

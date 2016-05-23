@@ -14,6 +14,7 @@ import java.io.IOException;
  */
 @Repository
 public class FeedBackDaoImp implements FeedBackDao {
+
     public void insert(Suggestion suggestion) {
         SqlSession sqlSession = null;
         try {

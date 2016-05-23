@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shakool.dao.NoteFileDao">
+
+    <resultMap id="noteFile" type="com.shakool.pojo.NoteFile">
+        <result property="fileId" column="fileId" />
+        <result property="userId" column="userId" />
+        <result property="url" column="url" />
+        <result property="uploadTime" column="uploadTime" />
+    </resultMap>
+
+    <sql id="noteFileSelector">
+        SELECT
+        <if test="fields != null">
+            ${fields}
+        </if>
+        <if test="fields == null">
+            fileId,userId,url,uploadTime
+        </if>
+        FROM noteFile
+    </sql>
+
+    <sql id="noteFileListWhere">
+        <where>
+            <if test="fileId!=null">
+                and fileId=#{fileId}
+            </if>
+            <if test="noteId!=null">
+                and userId=#{userId}
+            </if>
+
+
+        </where>
+    </sql>
+
+
+    <!-- 根据主键查询 -->
+    <select id="getNoteFileList" parameterType="com.shakool.query.NoteFileQuery" resultMap="noteFile">
+        <include refid="noteFileSelector" />
+        <include refid="noteFileListWhere" />
+    </select>
+
+    <!-- 添加 -->
+    <insert id="addNoteFile" parameterType="com.shakool.pojo.NoteFile">
+        INSERT INTO noteFile
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">
+                fileId,
+            </if>
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="uploadTime != null">
+                uploadTime,
+            </if>
+        </trim>
+
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">
+                #{fileId},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="url != null">
+                #{url},
+            </if>
+            <if test="uploadTime != null">
+                #{uploadTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByKey" parameterType="hashMap">
+        DELETE FROM noteFile
+        WHERE
+        fileId=#{fileId}
+    </delete>
+
+</mapper>

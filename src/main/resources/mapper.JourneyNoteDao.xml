@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shakool.dao.JourneyNoteDao">
+
+    <resultMap id="journeyNote" type="com.shakool.pojo.JourneyNote">
+        <result property="noteId" column="noteId" />
+        <result property="title" column="title" />
+        <result property="userId" column="userId" />
+        <result property="content" column="content" />
+        <result property="tag" column="tag" />
+        <result property="category" column="category" />
+        <result property="departureDate" column="departureDate" />
+        <result property="travelDays" column="travelDays" />
+        <result property="human" column="human" />
+        <result property="fee" column="fee" />
+        <result property="updateTime" column="updateTime" />
+    </resultMap>
+
+    <sql id="journeyNoteSelector">
+        SELECT
+          <if test="fields != null">
+              ${fields}
+          </if>
+          <if test="fields == null">
+              *
+          </if>
+        FROM journeyNote
+    </sql>
+
+    <sql id="journeyNoteListWhere">
+        <where>
+            <if test="userId!=null">
+                and userId=#{userId}
+            </if>
+            <if test="noteId!=null">
+                and noteId=#{noteId}
+            </if>
+
+
+        </where>
+    </sql>
+
+    <sql id="journeyNoteListOrder">
+        <if test="orderFields!=null and orderFields.size>0">
+          order by 
+            <foreach collection="orderFields" separator="," item="orderField">
+                ${orderField.fieldName} ${orderField.order}
+            </foreach>
+        </if>
+
+    </sql>
+
+    <sql id="journeyNoteListLimit">
+        <if test="startRow != null">
+            limit #{startRow},#{pageSize}
+        </if>
+    </sql>
+
+    <!-- 分页查询 游记列表-->
+    <select id="getJourneyNoteListWithPage" parameterType="com.shakool.query.JourneyNoteQuery" resultMap="journeyNote">
+        <include refid="journeyNoteSelector" />
+        <include refid="journeyNoteListWhere" />
+        <include refid="journeyNoteListOrder" />
+        <include refid="journeyNoteListLimit" />
+    </select>
+    <!-- 数据总数 -->
+    <select id="getJourneyNoteListCount" parameterType="com.shakool.query.JourneyNoteQuery" resultType="int">
+        SELECT count(1) FROM journeyNote
+        <include refid="journeyNoteListWhere" />
+    </select>
+
+    <!-- 根据主键更新 -->
+    <update id="updateJourneyNoteByKey" parameterType="com.shakool.pojo.JourneyNote">
+        UPDATE journeyNote
+        <set>
+            <trim suffixOverrides=",">
+                <if test="noteId != null">
+                    noteId=#{noteId},
+                </if>
+                <if test="title != null">
+                    title=#{title},
+                </if>
+                <if test="userId != null">
+                    userId=#{userId},
+                </if>
+                <if test="content != null">
+                    content=#{content},
+                </if>
+                <if test="category != null">
+                    category=#{category},
+                </if>
+                <if test="tag != null">
+                    tag=#{tag},
+                </if>
+                <if test="departureDate != null">
+                    departureDate=#{departureDate},
+                </if>
+                <if test="travelDays != null">
+                    travelDays=#{travelDays},
+                </if>
+                <if test="human != null">
+                    human=#{human},
+                </if>
+                <if test="fee != null">
+                    fee=#{fee},
+                </if>
+                <if test="updateTime != null">
+                    updateTime=#{updateTime},
+                </if>
+            </trim>
+        </set>
+
+        WHERE noteId=#{noteId}
+
+    </update>
+
+    <!-- 添加 -->
+    <insert id="addJourneyNote" parameterType="com.shakool.pojo.JourneyNote">
+        INSERT INTO journeyNote
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="noteId != null">
+                noteId,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="tag != null">
+                tag,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="departureDate != null">
+                departureDate,
+            </if>
+            <if test="travelDays != null">
+                travelDays,
+            </if>
+            <if test="human != null">
+                human,
+            </if>
+            <if test="fee != null">
+                fee,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="noteId != null">
+                #{noteId},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            <if test="category != null">
+                #{category},
+            </if>
+            <if test="tag != null">
+                #{tag},
+            </if>
+            <if test="departureDate != null">
+                #{departureDate},
+            </if>
+            <if test="travelDays != null">
+                #{travelDays},
+            </if>
+            <if test="human != null">
+                #{human},
+            </if>
+            <if test="fee != null">
+                #{fee},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByKey" parameterType="hashMap">
+        DELETE FROM journeyNote
+        WHERE
+        noteId=#{id}
+    </delete>
+
+    <!-- 根据主键批量删除 -->
+    <delete id="deleteByKeys">
+        DELETE FROM journeyNote
+        WHERE
+        id in
+        <foreach collection="list" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

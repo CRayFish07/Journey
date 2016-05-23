@@ -25,7 +25,9 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/login" , method = RequestMethod.POST)
-    public @ResponseBody String login(@RequestParam(required = false,name = "phone") String phone, @RequestParam(required = false,name = "username") String username, @RequestParam(required = false,name = "passwd") String passwd) {
+    public @ResponseBody String login(@RequestParam(required = false,name = "phone") String phone,
+                                      @RequestParam(required = false,name = "username") String username,
+                                      @RequestParam(required = false,name = "passwd") String passwd) {
         if (passwd == null || passwd.equals("")) {
             return "{\"errcode\":\"2\",\"msg\":\"参数错误\"}";
         }
@@ -79,7 +81,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register" , method = RequestMethod.POST)
-    public @ResponseBody String register(HttpSession session, @RequestParam(required = false,name = "phone") String phone, @RequestParam(required = false,name = "passwd") String passwd, @RequestParam(required = false,name = "nickname") String nickname, @RequestParam(required = false,name = "captcha") String captcha) {
+    public @ResponseBody String register(HttpSession session,
+                                         @RequestParam(required = false,name = "phone") String phone,
+                                         @RequestParam(required = false,name = "passwd") String passwd,
+                                         @RequestParam(required = false,name = "nickname") String nickname,
+                                         @RequestParam(required = false,name = "captcha") String captcha) {
         if (captcha == null || captcha.equals("") || phone == null || phone.equals("") || passwd == null || passwd.equals("") || nickname == null || nickname.equals("")) {
             return "{\"errcode\":\"3\",\"msg\":\"参数错误\"}";
         }

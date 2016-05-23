@@ -13,7 +13,7 @@ public class PropertiesUtils {
     static {
         properties = new Properties();
         try {
-            properties.load(PropertiesUtils.class.getResourceAsStream("/config.properties"));
+            properties.load(PropertiesUtils.class.getResourceAsStream("/properties/config.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
