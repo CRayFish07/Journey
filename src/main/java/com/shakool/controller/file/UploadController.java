@@ -4,6 +4,9 @@ import com.shakool.common.ResponseUtils;
 import com.shakool.common.UploadUtils;
 import com.shakool.pojo.NoteFile;
 import com.shakool.service.NoteFileService;
+import com.shakool.service.VoiceService;
+import com.sun.org.apache.regexp.internal.RE;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletException;
@@ -30,6 +34,8 @@ public class UploadController {
 
     @Autowired
     private NoteFileService noteFileService;
+    @Autowired
+    private VoiceService voiceService;
 
     //上传游记图片 到本地服务器
     @RequestMapping(value = "/uploadImg" ,method = RequestMethod.POST)
@@ -67,5 +73,21 @@ public class UploadController {
         ResponseUtils.renderJson(response, jo.toString());
     }
 
+    //上传语音包
+    @RequestMapping(value = "/uploadvoice", method = RequestMethod.POST)
+    public @ResponseBody String uploadVoice(@RequestParam(required = false) MultipartFile voice, HttpServletRequest request) {
+        JSONObject jo = UploadUtils.uploadFile(voice, "Voices",request);
+        jo.remove("url");//不需要url，只需要返回path，即本地地址，客户端在前面加上服务器ip和端口号就能访问了
+        //这种路径：upload/Voices/1019c2e2-6d09-40f3-bd65-13294c77df4b.mp3
+        String filePath = jo.getString("path");
+        String fileName = voice.getOriginalFilename();
+        //"."的位置
+        int index = fileName.lastIndexOf('.');
+        if (index != -1) {
+            fileName = fileName.substring(0,index);
+        }
+        voiceService.insert(fileName,filePath);
+        return jo.toString();
+    }
 
 }

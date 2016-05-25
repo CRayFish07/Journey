@@ -1,6 +1,13 @@
 create database journey;
 use journey;
 
+#存储语音包信息
+create table voice(
+  id int primary key AUTO_INCREMENT,
+  name char(80),
+  url char(80)  #下载地址
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE journeyNote (
 	noteId char(36) NOT NULL,
 	title char(50) null,	#标题
