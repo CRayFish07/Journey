@@ -30,4 +30,7 @@ public interface UserMapper {
 
     @Insert("insert into user(wechatId,weiboId,qqId,username,nickname,password,authority,score,level,sex,birthday,phone,email,image,registtime) values(#{wechatId}, #{weiboId}, #{qqId}, #{username}, #{nickname}, #{password}, #{authority}, #{score}, #{level}, #{sex}, #{birthday}, #{phone}, #{email}, #{image}, #{registtime})")
     void insert(User newUser);
+
+    @Select("select count(userId) from user where userId = #{0}")
+    int userIdCount(int userId);
 }

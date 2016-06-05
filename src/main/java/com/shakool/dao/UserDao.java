@@ -26,4 +26,15 @@ public interface UserDao {
      * @param newUser 只会将新用户的phone,password,nickname,registtime存进数据库（注册时只有这几个数据）
      */
     void insert(User newUser);
+
+    //获取关注的人,结果中包含关注的人的id,用逗号隔开:"1,2,3,4"
+    String getFollowings(int userId);
+
+    //获取userId的粉丝,结果中包含粉丝的id,用逗号隔开:"1,2,3,4"
+    String getFollowers(int userId);
+
+    //userId关注followingId
+    void following(int userId,int followingId);
+
+    int userIdCount(int userId);
 }

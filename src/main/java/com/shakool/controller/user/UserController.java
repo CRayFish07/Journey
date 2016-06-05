@@ -108,4 +108,54 @@ public class UserController {
 
         return "{\"errcode\":\"0\",\"msg\":\"正常\"}";
     }
+
+    @RequestMapping(value = "/following", method = RequestMethod.GET)
+    public @ResponseBody String following(@RequestParam(required = false,name = "userid") String userId, @RequestParam(required = false,name = "followingid") String followingId) {
+        if (userId == null || followingId == null || userId.equals("") || followingId.equals("")) {
+            return "{\"errcode\":\"1\",\"msg\":\"参数错误\"}";
+        }
+
+        //两个用户存在
+        if (userService.userIdExist(Integer.parseInt(userId)) && userService.userIdExist(Integer.parseInt(followingId))) {
+            userService.following(Integer.parseInt(userId),Integer.parseInt(followingId));
+        } else {
+            return "{\"errcode\":\"2\",\"msg\":\"用户id错误\"}";
+        }
+
+        return "{\"errcode\":\"0\",\"msg\":\"关注成功\"}";
+    }
+
+    @RequestMapping(value = "/getfollowings", method = RequestMethod.GET)
+    public @ResponseBody String getfollowings(@RequestParam(required = false,name = "userid") String userId) {
+        if (userId == null || userId.equals("")) {
+            return "{\"errcode\":\"1\",\"msg\":\"参数错误\"}";
+        }
+
+        //两个用户存在
+        if (userService.userIdExist(Integer.parseInt(userId))) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("errcode","0");
+            jsonObject.put("followings",userService.getFollowings(Integer.parseInt(userId)));
+            return jsonObject.toString();
+        } else {
+            return "{\"errcode\":\"2\",\"msg\":\"用户id错误\"}";
+        }
+    }
+
+    @RequestMapping(value = "/getfollowers", method = RequestMethod.GET)
+    public @ResponseBody String getfollowers(@RequestParam(required = false,name = "userid") String userId) {
+        if (userId == null || userId.equals("")) {
+            return "{\"errcode\":\"1\",\"msg\":\"参数错误\"}";
+        }
+
+        //两个用户存在
+        if (userService.userIdExist(Integer.parseInt(userId))) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("errcode","0");
+            jsonObject.put("followers",userService.getFollowers(Integer.parseInt(userId)));
+            return jsonObject.toString();
+        } else {
+            return "{\"errcode\":\"2\",\"msg\":\"用户id错误\"}";
+        }
+    }
 }

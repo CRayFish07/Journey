@@ -136,14 +136,6 @@ CREATE TABLE `sitesecond` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `followers` (
-  `userId` int,
-  `followersId` int,
-  PRIMARY KEY (`userId`,`followersId`),
-  FOREIGN KEY (`followersId`) REFERENCES `user` (`userId`),
-  FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE `following` (
   `userId` int,
   `followingId` int,

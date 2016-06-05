@@ -54,4 +54,26 @@ public class UserServiceImp implements UserService {
     public void insert(User newUser) {
         userDao.insert(newUser);
     }
+
+    public String getFollowings(int userId) {
+        String result = userDao.getFollowings(userId);
+        result = result.replace(" ","");
+        result = result.substring(1,result.length() - 1);
+        return result;
+    }
+
+    public String getFollowers(int userId) {
+        String result = userDao.getFollowers(userId);
+        result = result.replace(" ","");
+        result = result.substring(1,result.length() - 1);
+        return result;
+    }
+
+    public void following(int userId, int followingId) {
+        userDao.following(userId,followingId);
+    }
+
+    public boolean userIdExist(int userId) {
+        return userDao.userIdCount(userId) >= 1;
+    }
 }
