@@ -125,6 +125,22 @@ public class UserController {
         return "{\"errcode\":\"0\",\"msg\":\"关注成功\"}";
     }
 
+    @RequestMapping(value = "/deletefollowing", method = RequestMethod.GET)
+    public @ResponseBody String deleteFollowing(@RequestParam(required = false,name = "userid") String userId, @RequestParam(required = false,name = "followingid") String followingId) {
+        if (userId == null || followingId == null || userId.equals("") || followingId.equals("")) {
+            return "{\"errcode\":\"1\",\"msg\":\"参数错误\"}";
+        }
+
+        //两个用户存在
+        if (userService.userIdExist(Integer.parseInt(userId)) && userService.userIdExist(Integer.parseInt(followingId))) {
+            userService.deleteFollowing(Integer.parseInt(userId),Integer.parseInt(followingId));
+        } else {
+            return "{\"errcode\":\"2\",\"msg\":\"用户id错误\"}";
+        }
+
+        return "{\"errcode\":\"0\",\"msg\":\"删除关注成功\"}";
+    }
+
     @RequestMapping(value = "/getfollowings", method = RequestMethod.GET)
     public @ResponseBody String getfollowings(@RequestParam(required = false,name = "userid") String userId) {
         if (userId == null || userId.equals("")) {

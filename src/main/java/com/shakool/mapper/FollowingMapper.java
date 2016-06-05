@@ -1,5 +1,6 @@
 package com.shakool.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -17,4 +18,7 @@ public interface FollowingMapper {
 
     @Insert("insert into following(userId,followingId) values(#{0},#{1})")
     void following(int userId, int followingId);
+
+    @Delete("delete from following where userId=#{0} and followingId=#{1}")
+    void deleteFollowing(int userId, int followingId);
 }

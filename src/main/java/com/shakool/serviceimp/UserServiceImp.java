@@ -62,6 +62,10 @@ public class UserServiceImp implements UserService {
         return result;
     }
 
+    public void deleteFollowing(int userId, int followingId) {
+        userDao.deleteFollowing(userId,followingId);
+    }
+
     public String getFollowers(int userId) {
         String result = userDao.getFollowers(userId);
         result = result.replace(" ","");

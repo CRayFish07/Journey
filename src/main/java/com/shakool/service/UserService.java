@@ -28,4 +28,6 @@ public interface UserService {
 
     //userId关注followingId
     void following(int userId,int followingId);
+
+    void deleteFollowing(int userId,int followingId);
 }

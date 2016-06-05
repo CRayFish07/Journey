@@ -37,4 +37,6 @@ public interface UserDao {
     void following(int userId,int followingId);
 
     int userIdCount(int userId);
+
+    void deleteFollowing(int userId, int followingId);
 }

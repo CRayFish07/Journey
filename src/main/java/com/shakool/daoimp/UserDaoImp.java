@@ -194,4 +194,20 @@ public class UserDaoImp implements UserDao {
 
         return count;
     }
+
+    public void deleteFollowing(int userId, int followingId) {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = MyBatisUtils.getSession();
+            FollowingMapper mapper = sqlSession.getMapper(FollowingMapper.class);
+            mapper.deleteFollowing(userId,followingId);
+            sqlSession.commit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
 }
