@@ -39,4 +39,6 @@ public interface UserDao {
     int userIdCount(int userId);
 
     void deleteFollowing(int userId, int followingId);
+
+    User getDecalredInfosWithUserId(String userId);
 }

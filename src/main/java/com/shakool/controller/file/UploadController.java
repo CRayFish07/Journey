@@ -5,8 +5,6 @@ import com.shakool.common.UploadUtils;
 import com.shakool.pojo.NoteFile;
 import com.shakool.service.NoteFileService;
 import com.shakool.service.VoiceService;
-import com.sun.org.apache.regexp.internal.RE;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.IOException;
 import java.util.Date;
 
 /**

@@ -53,6 +53,24 @@ public class UserDaoImp implements UserDao {
         return user;
     }
 
+    public User getDecalredInfosWithUserId(String userId) {
+        SqlSession sqlSession = null;
+        User user = null;
+        try {
+            sqlSession = MyBatisUtils.getSession();
+            UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+            user = mapper.getDecalredInfosWithUserId(userId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+
+        return user;
+    }
+
     public User getUserWithPhonePasswd(String phone, String passwd) {
         SqlSession sqlSession = null;
         User user = null;

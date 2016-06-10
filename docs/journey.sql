@@ -1,6 +1,26 @@
 create database journey;
 use journey;
 
+CREATE TABLE `user` (
+  `userId` int NOT NULL AUTO_INCREMENT,
+  `wechatId` char(50) unique,
+  `weiboId` char(50) unique,
+  `qqId` char(50) unique,
+  `username` char(20) unique, -- 类似微信号，可用于登陆，但一开始未设置，一旦设置不可更改
+  `nickname` char(20) NOT NULL,
+  `password` char(32),  -- 32位md5加密过的
+  `authority` int DEFAULT '0', -- 0表示普通用户
+  `score` int DEFAULT '0', -- 积分
+  `level` int DEFAULT '1', -- 等级
+  `sex` char(1) DEFAULT 'm', -- m/f/s 分别表示 男/女/秘密
+  `birthday` char(10), -- eg:1990-10-10
+  `phone` char(11) unique,
+  `email` char(60) unique,
+  `image` char(60), -- 头像地址
+  `registtime` char(10) NOT NULL,
+  PRIMARY KEY (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 #存储语音包信息
 create table voice(
   id int primary key AUTO_INCREMENT,
@@ -89,26 +109,6 @@ INSERT INTO `sitetype` VALUES ('105', '休闲度假');
 INSERT INTO `sitetype` VALUES ('106', '其他');
 INSERT INTO `sitetype` VALUES ('107', '宗教');
 INSERT INTO `sitetype` VALUES ('108', '大学');
-
-CREATE TABLE `user` (
-  `userId` int NOT NULL AUTO_INCREMENT,
-  `wechatId` char(50) unique,
-  `weiboId` char(50) unique,
-  `qqId` char(50) unique,
-  `username` char(20) unique, -- 类似微信号，可用于登陆，但一开始未设置，一旦设置不可更改
-  `nickname` char(20) NOT NULL,
-  `password` char(32),  -- 32位md5加密过的
-  `authority` int DEFAULT '0', -- 0表示普通用户
-  `score` int DEFAULT '0', -- 积分
-  `level` int DEFAULT '1', -- 等级
-  `sex` char(1) DEFAULT 'm', -- m/f/s 分别表示 男/女/秘密
-  `birthday` char(10), -- eg:1990-10-10
-  `phone` char(11) unique,
-  `email` char(60) unique,
-  `image` char(60), -- 头像地址
-  `registtime` char(10) NOT NULL,
-  PRIMARY KEY (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `sitethird` (
   `id` int NOT NULL AUTO_INCREMENT,

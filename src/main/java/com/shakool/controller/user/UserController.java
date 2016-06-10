@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by geekgao on 16-3-29.
@@ -151,7 +153,39 @@ public class UserController {
         if (userService.userIdExist(Integer.parseInt(userId))) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("errcode","0");
-            jsonObject.put("followings",userService.getFollowings(Integer.parseInt(userId)));
+            List<User> users = new LinkedList<User>();
+            for (String uid:userService.getFollowings(Integer.parseInt(userId)).split(",")) {
+                User user = userService.getDecalredInfosWithUserId(uid);
+                if (user == null) {
+                    continue;
+                }
+                /**
+                 * 某些值可能为null，那么就不会被返回到前台，这里处理来一下，如果为null改值为空
+                 */
+                if (user.getUsername() == null) {
+                    user.setUsername("");
+                }
+                if (user.getBirthday() == null) {
+                    user.setBirthday("");
+                }
+                if (user.getPhone() == null) {
+                    user.setPhone("");
+                }
+                if (user.getEmail() == null) {
+                    user.setEmail("");
+                }
+                if (user.getImage() == null) {
+                    user.setImage("");
+                }
+                users.add(user);
+            }
+
+            if (users.size() == 0) {
+                jsonObject.put("errcode","3");
+                jsonObject.put("msg","没有关注别人");
+            } else {
+                jsonObject.put("followings",users);
+            }
             return jsonObject.toString();
         } else {
             return "{\"errcode\":\"2\",\"msg\":\"用户id错误\"}";
@@ -168,7 +202,39 @@ public class UserController {
         if (userService.userIdExist(Integer.parseInt(userId))) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("errcode","0");
-            jsonObject.put("followers",userService.getFollowers(Integer.parseInt(userId)));
+            List<User> users = new LinkedList<User>();
+            for (String uid:userService.getFollowers(Integer.parseInt(userId)).split(",")) {
+                User user = userService.getDecalredInfosWithUserId(uid);
+                if (user == null) {
+                    continue;
+                }
+                /**
+                 * 某些值可能为null，那么就不会被返回到前台，这里处理来一下，如果为null改值为空
+                 */
+                if (user.getUsername() == null) {
+                    user.setUsername("");
+                }
+                if (user.getBirthday() == null) {
+                    user.setBirthday("");
+                }
+                if (user.getPhone() == null) {
+                    user.setPhone("");
+                }
+                if (user.getEmail() == null) {
+                    user.setEmail("");
+                }
+                if (user.getImage() == null) {
+                    user.setImage("");
+                }
+                users.add(user);
+            }
+
+            if (users.size() == 0) {
+                jsonObject.put("errcode","3");
+                jsonObject.put("msg","没有粉丝");
+            } else {
+                jsonObject.put("followers",users);
+            }
             return jsonObject.toString();
         } else {
             return "{\"errcode\":\"2\",\"msg\":\"用户id错误\"}";

@@ -37,6 +37,10 @@ public class UserServiceImp implements UserService {
         return userDao.getDecalredInfosWithUserName(username);
     }
 
+    public User getDecalredInfosWithUserId(String userId) {
+        return userDao.getDecalredInfosWithUserId(userId);
+    }
+
     public boolean phoneExist(String phone) {
         int count = userDao.phoneCount(phone);
         if (count == 1) {

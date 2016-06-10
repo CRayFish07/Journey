@@ -14,6 +14,9 @@ public interface UserMapper {
     @Select("select userid,username,nickname,authority,registTime,score,level,sex,birthday,phone,email,image from user where username = #{0}")
     User getDecalredInfosWithUserName(String username);
 
+    @Select("select userid,username,nickname,authority,registTime,score,level,sex,birthday,phone,email,image from user where userId = #{0}")
+    User getDecalredInfosWithUserId(String userId);
+
     @Select("select * from user where phone = #{0} and password = #{1}")
     User getUserWithPhonePasswd(String phone, String passwd);
 

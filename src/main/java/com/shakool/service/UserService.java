@@ -14,6 +14,8 @@ public interface UserService {
 
     User getDecalredInfosWithUserName(String username);
 
+    User getDecalredInfosWithUserId(String userId);
+
     boolean phoneExist(String phone);
 
     boolean userIdExist(int userId);
